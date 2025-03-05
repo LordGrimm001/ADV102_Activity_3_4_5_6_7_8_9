@@ -13,7 +13,6 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function Exercise() {
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
   const animation = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
 
@@ -22,60 +21,51 @@ export default function Exercise() {
       title: "Exercise 3",
       description:
         "Create login screen<br/>Login screen fields:\n\n<ul><li>Email</li><li>Password</li></ul>",
+      route: "login",
+      buttonText: "Click to Log in",
     },
     {
       title: "Exercise 4",
       description:
-        "UseState and useEffect<br/>Create a timer that starts when the user clicks the start button and stops when the user clicks the stop button",
+        "Using the useState and useEffect hooks, create a stopwatch with two buttons: one for Start/Stop and one for Reset.",
+      route: "stopwatch",
+      buttonText: "Try Stopwatch",
     },
     {
       title: "Exercise 5",
       description:
         "Create register screen<br/>Register screen fields:\n\n<ul><li>Image: Allows user to select image</li><li>Name</li><li>Email</li><li>Password</li></ul>",
+      route: "register",
+      buttonText: "Click to Register an Account",
     },
     {
       title: "Exercise 6",
       description: "Simple CRUD using useContext and useReducer",
+      route: "crud",
+      buttonText: "Click for CRUD Content",
     },
-    { title: "Exercise 7", description: "Sample description rendered HTML 7" },
-    { title: "Exercise 8", description: "Sample description rendered HTML 8" },
-    { title: "Exercise 9", description: "Sample description rendered HTML 9" },
-    { title: "Exercise 10", description: "Sample description rendered HTML 10" },
   ];
 
   const toggleExpand = (index) => {
     if (expandedIndex === index) {
       Animated.timing(animation, {
         toValue: 0,
-        duration: 300,
+        duration: 200,
         useNativeDriver: false
       }).start(() => setExpandedIndex(null));
     } else {
       setExpandedIndex(index);
       Animated.timing(animation, {
         toValue: 1,
-        duration: 300,
+        duration: 200,
         useNativeDriver: false
       }).start();
     }
   };
 
-  const handlePress = (index) => {
-    switch (index) {
-      case 0:
-        navigation.navigate("login");
-        break;
-      case 1:
-        navigation.navigate("../(information)/effect");
-        break;
-      case 2:
-        navigation.navigate("../(information)/register");
-        break;
-      case 3:
-        navigation.navigate("../(information)/crud");
-        break;
-      default:
-        break;
+  const handleNavigation = (route) => {
+    if (route) {
+      navigation.navigate(route);
     }
   };
 
@@ -86,27 +76,31 @@ export default function Exercise() {
         <TouchableOpacity
           key={index}
           onPress={() => toggleExpand(index)}
-          onPressIn={() => setHoveredIndex(index)}
-          onPressOut={() => setHoveredIndex(null)}
           activeOpacity={0.9}
           style={styles.card}
         >
           <LinearGradient
-            colors={hoveredIndex === index ? ['cyan', '#B5FFFC'] : ['#FFFFFF', '#F1F1F1']}
+            colors={expandedIndex === index ? ['#B5FFFC', 'cyan'] : ['#FFFFFF', '#F1F1F1']}
             style={styles.gradient}
           >
             <Text style={styles.title}>{exercise.title}</Text>
-            {expandedIndex === index && (
-                    <Animated.View style={[styles.descriptionContainer, { opacity: animation }]}>
-                        <HTMLView value={exercise.description} stylesheet={htmlStyles} />
-                        <TouchableOpacity onPress={() => handlePress(index)} style={styles.navigateButton}>
-                        <Text style={styles.navigateButtonText}>
-                            {index === 0 ? "Log In" : "Go to Exercise"}
-                        </Text>
-                        </TouchableOpacity>
-                    </Animated.View>
-                    )}
 
+            {expandedIndex === index && (
+              <Animated.View style={[styles.descriptionContainer, { opacity: animation }]}>
+                <HTMLView value={exercise.description} stylesheet={htmlStyles} />
+
+                {exercise.route && (
+                  <TouchableOpacity
+                    onPress={() => handleNavigation(exercise.route)}
+                    style={styles.navigateButton}
+                  >
+                    <Text style={styles.navigateButtonText}>
+                      {exercise.buttonText}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </Animated.View>
+            )}
           </LinearGradient>
         </TouchableOpacity>
       ))}
