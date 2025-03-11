@@ -44,6 +44,16 @@ export default function Exercise() {
       route: "crud",
       buttonText: "Click for CRUD Content",
     },
+
+    { 
+      title: "Exercise 7", 
+      description: "Create a simple quiz using the Open Trivia Database API. Users can select the number of questions (min 10, max 30). A timer of 10 seconds will be set for each question, and the final score will be displayed after submission.",
+      route: "quiz", // Add a route for the quiz screen
+      buttonText: "Try Quiz"
+    },
+    { title: "Exercise 8", description: "Sample description rendered HTML 8" },
+    { title: "Exercise 9", description: "Sample description rendered HTML 9" },
+    { title: "Exercise 10", description: "Sample description rendered HTML 10" },
   ];
 
   const toggleExpand = (index) => {
