@@ -51,9 +51,21 @@ export default function Exercise() {
       route: "quiz", // Add a route for the quiz screen
       buttonText: "Try Quiz"
     },
-    { title: "Exercise 8", description: "Sample description rendered HTML 8" },
-    { title: "Exercise 9", description: "Sample description rendered HTML 9" },
-    { title: "Exercise 10", description: "Sample description rendered HTML 10" },
+    {
+      title: "Exercise 8",
+      description: "Using React Hook Form, add appropriate validations for the registration and login page.",
+      route: "validationForms", // New route for combined forms
+      buttonText: "Try Validation Form",
+    },
+    
+    {
+      title: "Exercise 9",
+      description:
+        "Connect your React Native app to Firebase. On the registration and login pages, integrate Firebase Authentication and use Firebase Storage to allow users to upload a profile image during registration.",
+      route: "firebaseAuth", // This should match the folder name
+      buttonText: "Try Firebase Auth & Upload",
+    }
+    
   ];
 
   const toggleExpand = (index) => {
